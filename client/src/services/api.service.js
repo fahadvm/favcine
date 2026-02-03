@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    // Use a relative path now that we have a Vite proxy configured
+    baseURL: '/api',
 });
 
 export const movieService = {

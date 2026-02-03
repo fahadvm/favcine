@@ -13,6 +13,7 @@ const omdbClient = {
      */
     async search(query, page = 1) {
         if (!query) return { movies: [], totalResults: 0 };
+        console.log("iam working")
 
         try {
             const { data } = await axios.get('http://www.omdbapi.com/', {
