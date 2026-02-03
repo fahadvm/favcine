@@ -1,6 +1,6 @@
-const favoriteService = require('../services/favorite.service');
+import favoriteService from '../services/favorite.service.js';
 
-const getFavorites = async (req, res, next) => {
+export const getFavorites = async (req, res, next) => {
     try {
         const favorites = await favoriteService.getAllFavorites();
         res.json(favorites);
@@ -9,7 +9,7 @@ const getFavorites = async (req, res, next) => {
     }
 };
 
-const addFavorite = async (req, res, next) => {
+export const addFavorite = async (req, res, next) => {
     try {
         const movie = await favoriteService.addFavorite(req.body);
         res.status(201).json(movie);
@@ -18,17 +18,11 @@ const addFavorite = async (req, res, next) => {
     }
 };
 
-const removeFavorite = async (req, res, next) => {
+export const removeFavorite = async (req, res, next) => {
     try {
         await favoriteService.removeFavorite(req.params.id);
         res.json({ message: 'Removed from favorites' });
     } catch (error) {
         next(error);
     }
-};
-
-module.exports = {
-    getFavorites,
-    addFavorite,
-    removeFavorite
 };

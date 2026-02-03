@@ -1,4 +1,4 @@
-const favoritesStore = require('../utils/favoritesStore');
+import favoritesStore from '../utils/favoritesStore.js';
 
 class FavoriteService {
     async getAllFavorites() {
@@ -6,7 +6,6 @@ class FavoriteService {
     }
 
     async addFavorite(movie) {
-        // Basic validation before storing
         if (!movie.imdbID || !movie.title) {
             throw new Error('Invalid movie data: imdbID and title are required');
         }
@@ -18,4 +17,4 @@ class FavoriteService {
     }
 }
 
-module.exports = new FavoriteService();
+export default new FavoriteService();

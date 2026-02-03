@@ -1,5 +1,5 @@
-const axios = require('axios');
-const config = require('../config');
+import axios from 'axios';
+import config from '../config/index.js';
 
 /**
  * Reusable client for interacting with the OMDB API
@@ -47,4 +47,4 @@ const omdbClient = {
     },
 };
 
-module.exports = omdbClient;
+export default omdbClient;

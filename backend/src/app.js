@@ -1,9 +1,9 @@
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-const movieRoutes = require('./routes/movie.routes');
-const favoriteRoutes = require('./routes/favorite.routes');
-const errorHandler = require('./middleware/error.middleware');
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import movieRoutes from './routes/movie.routes.js';
+import favoriteRoutes from './routes/favorite.routes.js';
+import errorHandler from './middleware/error.middleware.js';
 
 const app = express();
 
@@ -22,4 +22,4 @@ app.get('/health', (req, res) => res.json({ status: 'OK' }));
 // Error Handling
 app.use(errorHandler);
 
-module.exports = app;
+export default app;

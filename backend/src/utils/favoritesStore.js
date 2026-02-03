@@ -1,6 +1,6 @@
-const fs = require('fs-extra');
-const path = require('path');
-const config = require('../config');
+import fs from 'fs-extra';
+import path from 'path';
+import config from '../config/index.js';
 
 /**
  * File-based storage for favorites using JSON
@@ -78,4 +78,4 @@ class FavoritesStore {
 }
 
 // Export as a singleton
-module.exports = new FavoritesStore();
+export default new FavoritesStore();
