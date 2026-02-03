@@ -1,29 +1,29 @@
 const favoriteService = require('../services/favorite.service');
 
-const getFavorites = async (req, res) => {
+const getFavorites = async (req, res, next) => {
     try {
-        const favorites = await favoriteService.getAll();
+        const favorites = await favoriteService.getAllFavorites();
         res.json(favorites);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch favorites' });
+        next(error);
     }
 };
 
-const addFavorite = async (req, res) => {
+const addFavorite = async (req, res, next) => {
     try {
-        const movie = await favoriteService.add(req.body);
+        const movie = await favoriteService.addFavorite(req.body);
         res.status(201).json(movie);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        next(error);
     }
 };
 
-const removeFavorite = async (req, res) => {
+const removeFavorite = async (req, res, next) => {
     try {
-        await favoriteService.remove(req.params.id);
+        await favoriteService.removeFavorite(req.params.id);
         res.json({ message: 'Removed from favorites' });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to remove favorite' });
+        next(error);
     }
 };
 
