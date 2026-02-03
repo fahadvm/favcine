@@ -1,35 +1,23 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import debounce from 'lodash.debounce';
-import { searchMovies, getFavorites, addFavorite, removeFavorite } from '../api';
+import { movieService } from '../services/api.service';
+import { useFavorites } from '../hooks/useFavorites';
 import MovieCard from '../components/MovieCard';
 
 const Home = () => {
     const [query, setQuery] = useState('');
     const [movies, setMovies] = useState([]);
-    const [favorites, setFavorites] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        fetchFavorites();
-    }, []);
-
-    const fetchFavorites = async () => {
-        try {
-            const { data } = await getFavorites();
-            setFavorites(data);
-        } catch (err) {
-            console.error('Error fetching favorites', err);
-        }
-    };
+    const [searchLoading, setSearchLoading] = useState(false);
+    const { isFavorite, toggleFavorite } = useFavorites();
 
     const performSearch = async (searchTerm) => {
         if (!searchTerm) {
             setMovies([]);
             return;
         }
-        setLoading(true);
+        setSearchLoading(true);
         try {
-            const { data } = await searchMovies(searchTerm);
+            const { data } = await movieService.search(searchTerm);
             if (data.Search) {
                 setMovies(data.Search);
             } else {
@@ -38,11 +26,10 @@ const Home = () => {
         } catch (err) {
             console.error('Search error', err);
         } finally {
-            setLoading(false);
+            setSearchLoading(false);
         }
     };
 
-    // Debounced search function
     const debouncedSearch = useCallback(
         debounce((nextValue) => performSearch(nextValue), 500),
         []
@@ -52,21 +39,6 @@ const Home = () => {
         const value = e.target.value;
         setQuery(value);
         debouncedSearch(value);
-    };
-
-    const toggleFavorite = async (movie) => {
-        const isFav = favorites.find(fav => fav.imdbID === movie.imdbID);
-        try {
-            if (isFav) {
-                await removeFavorite(movie.imdbID);
-                setFavorites(favorites.filter(fav => fav.imdbID !== movie.imdbID));
-            } else {
-                await addFavorite(movie);
-                setFavorites([...favorites, movie]);
-            }
-        } catch (err) {
-            console.error('Toggle favorite error', err);
-        }
     };
 
     return (
@@ -81,20 +53,20 @@ const Home = () => {
                 />
             </div>
 
-            {loading && <p>Loading...</p>}
+            {searchLoading && <p>Searching...</p>}
 
             <div className="movie-grid">
                 {movies.map(movie => (
                     <MovieCard
                         key={movie.imdbID}
                         movie={movie}
-                        isFavorite={!!favorites.find(fav => fav.imdbID === movie.imdbID)}
+                        isFavorite={isFavorite(movie.imdbID)}
                         onToggleFavorite={toggleFavorite}
                     />
                 ))}
             </div>
 
-            {!loading && query && movies.length === 0 && (
+            {!searchLoading && query && movies.length === 0 && (
                 <p>No movies found for "{query}"</p>
             )}
         </div>
