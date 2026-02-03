@@ -1,17 +1,9 @@
-const axios = require('axios');
-const config = require('../config');
+const omdbClient = require('../utils/omdbClient');
 
 class OmdbService {
     async searchMovies(query) {
-        if (!query) throw new Error('Query is required');
-
-        const response = await axios.get(`http://www.omdbapi.com/`, {
-            params: {
-                apikey: config.OMDB_API_KEY,
-                s: query
-            }
-        });
-        return response.data;
+        // We could add business logic here (e.g., caching, filtering)
+        return await omdbClient.search(query);
     }
 }
 

@@ -4,8 +4,8 @@ const MovieCard = ({ movie, isFavorite, onToggleFavorite }) => {
     return (
         <div className="movie-card">
             <img
-                src={movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450?text=No+Poster'}
-                alt={movie.Title}
+                src={movie.poster}
+                alt={movie.title}
             />
             <button
                 className={`favorite-btn ${isFavorite ? 'active' : ''}`}
@@ -14,8 +14,8 @@ const MovieCard = ({ movie, isFavorite, onToggleFavorite }) => {
                 <Heart fill={isFavorite ? 'currentColor' : 'none'} />
             </button>
             <div className="movie-info">
-                <div className="movie-title">{movie.Title}</div>
-                <div className="movie-year">{movie.Year}</div>
+                <div className="movie-title">{movie.title}</div>
+                <div className="movie-year">{movie.year}</div>
             </div>
         </div>
     );
