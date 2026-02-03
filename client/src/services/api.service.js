@@ -5,7 +5,15 @@ const api = axios.create({
 });
 
 export const movieService = {
-    search: (query) => api.get(`/movies/search?query=${query}`),
+    /**
+     * Search movies with pagination
+     * @param {string} query 
+     * @param {number} page 
+     */
+    search: (query, page = 1) => api.get(`/movies/search`, {
+        params: { query, page }
+    }),
+
     getFavorites: () => api.get('/favorites'),
     addFavorite: (movie) => api.post('/favorites', movie),
     removeFavorite: (id) => api.delete(`/favorites/${id}`),

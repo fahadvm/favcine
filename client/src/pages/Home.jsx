@@ -18,8 +18,8 @@ const Home = () => {
         setSearchLoading(true);
         try {
             const { data } = await movieService.search(searchTerm);
-            if (data.Search) {
-                setMovies(data.Search);
+            if (data.movies) {
+                setMovies(data.movies);
             } else {
                 setMovies([]);
             }
