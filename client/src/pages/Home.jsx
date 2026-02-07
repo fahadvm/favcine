@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import movieService from '../services/movieService';
 import { useFavorites } from '../hooks/useFavorites';
-import MovieCard from '../components/MovieCard';
+import MovieList from '../components/MovieList';
 import SearchBar from '../components/SearchBar';
 import useDebounce from '../hooks/useDebounce';
 
@@ -11,7 +11,6 @@ const Home = () => {
     const [searchLoading, setSearchLoading] = useState(false);
     const { isFavorite, toggleFavorite } = useFavorites();
 
-    // Use our custom debounce hook
     const debouncedQuery = useDebounce(query, 500);
 
     const performSearch = async (searchTerm) => {
@@ -34,7 +33,6 @@ const Home = () => {
         }
     };
 
-    // Trigger search when the debounced value changes
     useEffect(() => {
         performSearch(debouncedQuery);
     }, [debouncedQuery]);
@@ -44,33 +42,21 @@ const Home = () => {
     };
 
     return (
-        <div>
+        <div className="home-page">
             <SearchBar onSearch={handleSearch} />
 
-            {searchLoading && (
+            {searchLoading ? (
                 <div className="status-container">
                     <p>Searching for movies...</p>
                 </div>
+            ) : (
+                <MovieList
+                    movies={movies}
+                    isFavorite={isFavorite}
+                    onToggleFavorite={toggleFavorite}
+                    emptyMessage={query ? `No movies found for "${query}"` : "Start searching for your favorite movies!"}
+                />
             )}
-
-            <div className="movie-grid">
-                {movies.length > 0 ? (
-                    movies.map(movie => (
-                        <MovieCard
-                            key={movie.imdbID}
-                            movie={movie}
-                            isFavorite={isFavorite(movie.imdbID)}
-                            onToggleFavorite={toggleFavorite}
-                        />
-                    ))
-                ) : (
-                    !searchLoading && query && (
-                        <div className="status-container">
-                            <p>No movies found for "{query}"</p>
-                        </div>
-                    )
-                )}
-            </div>
         </div>
     );
 };
