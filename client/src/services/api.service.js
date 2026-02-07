@@ -1,31 +1,43 @@
 import axios from 'axios';
 
 const api = axios.create({
-    // Use /api mapping from Vite proxy
+    // Using the proxy defined in vite.config.js
     baseURL: '/api',
+    headers: {
+        'Content-Type': 'application/json',
+    },
 });
+
+// Add a response interceptor for global error handling
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        const message = error.response?.data?.message || 'Something went wrong';
+        console.error(`[API Error] ${message}`);
+        return Promise.reject(error);
+    }
+);
 
 export const movieService = {
     /**
      * Search movies with pagination
-     * GET /api/movies/search?query=...&page=...
      */
     search: (query, page = 1) => api.get(`/movies/search`, {
         params: { query, page }
     }),
 
     /**
-     * GET /api/movies/favorites
+     * Get all favorites
      */
     getFavorites: () => api.get('/movies/favorites'),
 
     /**
-     * POST /api/movies/favorites
+     * Add a movie to favorites
      */
     addFavorite: (movie) => api.post('/movies/favorites', movie),
 
     /**
-     * DELETE /api/movies/favorites/:imdbID
+     * Remove a movie from favorites
      */
     removeFavorite: (imdbID) => api.delete(`/movies/favorites/${imdbID}`),
 };
