@@ -1,4 +1,5 @@
 import favoritesStore from '../utils/favoritesStore.js';
+import ApiError from '../utils/ApiError.js';
 
 class FavoriteService {
     async getAllFavorites() {
@@ -7,13 +8,28 @@ class FavoriteService {
 
     async addFavorite(movie) {
         if (!movie.imdbID || !movie.title) {
-            throw new Error('Invalid movie data: imdbID and title are required');
+            throw new ApiError(400, 'Invalid movie data: imdbID and title are required');
         }
-        return await favoritesStore.add(movie);
+
+        try {
+            return await favoritesStore.add(movie);
+        } catch (error) {
+            if (error.message.includes('already in favorites')) {
+                throw new ApiError(400, error.message);
+            }
+            throw error;
+        }
     }
 
     async removeFavorite(id) {
-        return await favoritesStore.remove(id);
+        try {
+            return await favoritesStore.remove(id);
+        } catch (error) {
+            if (error.message.includes('not found')) {
+                throw new ApiError(404, error.message);
+            }
+            throw error;
+        }
     }
 }
 

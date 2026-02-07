@@ -1,4 +1,5 @@
 import omdbService from '../services/omdb.service.js';
+import ApiError from '../utils/ApiError.js';
 
 /**
  * Controller for movie search
@@ -9,7 +10,7 @@ export const searchMovies = async (req, res, next) => {
         const { query, page } = req.query;
 
         if (!query || query.trim().length === 0) {
-            return res.status(400).json({ error: 'Search query is required' });
+            throw new ApiError(400, 'Search query is required');
         }
 
         const pageNumber = parseInt(page) || 1;
