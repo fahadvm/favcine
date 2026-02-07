@@ -9,7 +9,7 @@ function App() {
     <Router>
       <div className="app-container">
         <Navbar />
-        <main>
+        <main className="content">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/favorites" element={<Favorites />} />
