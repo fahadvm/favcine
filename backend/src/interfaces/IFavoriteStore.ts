@@ -1,4 +1,4 @@
-import { Favorite, Movie } from '';
+import { Favorite, Movie } from "../types";
 
 export interface IFavoriteStore {
     getAll(): Promise<Favorite[]>;

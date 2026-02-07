@@ -1,16 +1,31 @@
-import axios from 'axios';
-import config from '../config/index.js';
-import ApiError from '../utils/ApiError.js';
-export class OmdbService {
-    baseUrl = 'https://www.omdbapi.com/';
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.OmdbService = void 0;
+const inversify_1 = require("inversify");
+const axios_1 = __importDefault(require("axios"));
+const index_1 = __importDefault(require("../config/index"));
+const ApiError_1 = __importDefault(require("../utils/ApiError"));
+let OmdbService = class OmdbService {
+    constructor() {
+        this.baseUrl = 'https://www.omdbapi.com/';
+    }
     async searchMovies(query, page = 1) {
         if (!query)
             return { movies: [], totalResults: 0 };
         try {
             console.log(`[OmdbService] Searching for: "${query}" (page: ${page})`);
-            const res = await axios.get(this.baseUrl, {
+            const res = await axios_1.default.get(this.baseUrl, {
                 params: {
-                    apikey: config.OMDB_API_KEY,
+                    apikey: index_1.default.OMDB_API_KEY,
                     s: query,
                     page,
                 },
@@ -20,7 +35,7 @@ export class OmdbService {
                 if (data.Error === 'Movie not found!') {
                     return { movies: [], totalResults: 0 };
                 }
-                throw new ApiError(400, `OMDB Error: ${data.Error}`);
+                throw new ApiError_1.default(400, `OMDB Error: ${data.Error}`);
             }
             const movies = (data.Search || []).map((movie) => ({
                 title: movie.Title,
@@ -36,12 +51,16 @@ export class OmdbService {
             };
         }
         catch (error) {
-            if (error instanceof ApiError)
+            if (error instanceof ApiError_1.default)
                 throw error;
             const statusCode = error.response?.status || 500;
             const message = error.response?.data?.Error || 'Failed to fetch data from OMDB API';
             console.error('[OmdbService Error]', error.response?.data || error.message);
-            throw new ApiError(statusCode, message);
+            throw new ApiError_1.default(statusCode, message);
         }
     }
-}
+};
+exports.OmdbService = OmdbService;
+exports.OmdbService = OmdbService = __decorate([
+    (0, inversify_1.injectable)()
+], OmdbService);
