@@ -1,10 +1,15 @@
+import { injectable, inject } from 'inversify';
+import { TYPES } from '../types/di.types.js';
 import { IFavoriteStore } from '../interfaces/IFavoriteStore.js';
 import ApiError from '../utils/ApiError.js';
 import { Movie, Favorite } from '../types/index.js';
 
+@injectable()
 export class FavoriteService {
     // SOLID: Dependency Inversion - depending on interface not implementation
-    constructor(private readonly favoriteStore: IFavoriteStore) { }
+    constructor(
+        @inject(TYPES.IFavoriteStore) private readonly favoriteStore: IFavoriteStore
+    ) { }
 
     async getAllFavorites(): Promise<Favorite[]> {
         return await this.favoriteStore.getAll();

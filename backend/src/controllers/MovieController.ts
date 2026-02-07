@@ -1,9 +1,14 @@
+import { injectable, inject } from 'inversify';
+import { TYPES } from '../types/di.types.js';
 import { Request, Response, NextFunction } from 'express';
 import { IMovieService } from '../interfaces/IMovieService.js';
 import ApiError from '../utils/ApiError.js';
 
+@injectable()
 export class MovieController {
-    constructor(private readonly movieService: IMovieService) { }
+    constructor(
+        @inject(TYPES.IMovieService) private readonly movieService: IMovieService
+    ) { }
 
     /**
      * Controller for movie search

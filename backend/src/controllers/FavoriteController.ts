@@ -1,9 +1,14 @@
+import { injectable, inject } from 'inversify';
+import { TYPES } from '../types/di.types.js';
 import { Request, Response, NextFunction } from 'express';
 import { FavoriteService } from '../services/FavoriteService.js';
 import ApiError from '../utils/ApiError.js';
 
+@injectable()
 export class FavoriteController {
-    constructor(private readonly favoriteService: FavoriteService) { }
+    constructor(
+        @inject(TYPES.FavoriteService) private readonly favoriteService: FavoriteService
+    ) { }
 
     /**
      * GET /api/movies/favorites

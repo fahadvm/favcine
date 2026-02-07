@@ -1,14 +1,12 @@
 import { Router } from 'express';
+import { TYPES } from '../types/di.types.js';
+import { container } from '../container.js';
 import { FavoriteController } from '../controllers/FavoriteController.js';
-import { FavoriteService } from '../services/FavoriteService.js';
-import { FavoritesFileStore } from '../utils/FavoritesFileStore.js';
 
 const router = Router();
 
-// Manual Dependency Injection
-const favoriteStore = new FavoritesFileStore();
-const favoriteService = new FavoriteService(favoriteStore);
-const favoriteController = new FavoriteController(favoriteService);
+// Resolve Controller from Container
+const favoriteController = container.get<FavoriteController>(TYPES.FavoriteController);
 
 router.get('/', favoriteController.getFavorites);
 router.post('/', favoriteController.addFavorite);

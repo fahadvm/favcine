@@ -1,3 +1,4 @@
+import { injectable } from 'inversify';
 import fs from 'fs-extra';
 import path from 'path';
 import config from '../config/index.js';
@@ -8,6 +9,7 @@ import { Favorite, Movie } from '../types/index.js';
  * File-based storage for favorites using JSON
  * Implements IFavoriteStore (SOLID: Interface Segregation & Dependency Inversion)
  */
+@injectable()
 export class FavoritesFileStore implements IFavoriteStore {
     private readonly filePath: string;
 

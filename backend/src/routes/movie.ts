@@ -1,12 +1,12 @@
 import { Router } from 'express';
+import { TYPES } from '../types/di.types.js';
+import { container } from '../container.js';
 import { MovieController } from '../controllers/MovieController.js';
-import { OmdbService } from '../services/OmdbService.js';
 
 const router = Router();
 
-// Manual Dependency Injection
-const movieService = new OmdbService();
-const movieController = new MovieController(movieService);
+// Resolve Controller from Container
+const movieController = container.get<MovieController>(TYPES.MovieController);
 
 router.get('/search', movieController.searchMovies);
 
