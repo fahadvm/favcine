@@ -1,9 +1,9 @@
 import { injectable } from 'inversify';
 import fs from 'fs-extra';
 import path from 'path';
-import config from '../config/index.js';
-import { IFavoriteStore } from '../interfaces/IFavoriteStore.js';
-import { Favorite, Movie } from '../types/index.js';
+import config from '../config/index';
+import { IFavoriteStore } from '../interfaces/IFavoriteStore';
+import { Favorite, Movie } from '../types/index';
 
 /**
  * File-based storage for favorites using JSON

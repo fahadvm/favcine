@@ -1,8 +1,8 @@
 import { injectable, inject } from 'inversify';
-import { TYPES } from '../types/di.types.js';
+import { TYPES } from '../types/di.types';
 import { Request, Response, NextFunction } from 'express';
-import { FavoriteService } from '../services/FavoriteService.js';
-import ApiError from '../utils/ApiError.js';
+import { FavoriteService } from '../services/FavoriteService';
+import ApiError from '../utils/ApiError';
 
 @injectable()
 export class FavoriteController {

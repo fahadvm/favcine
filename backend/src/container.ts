@@ -1,21 +1,21 @@
 import "reflect-metadata";
 import { Container } from "inversify";
-import { TYPES } from "./types/di.types.js";
+import { TYPES } from "./types/di.types";
 
 // Interfaces
-import { IMovieService } from "./interfaces/IMovieService.js";
-import { IFavoriteStore } from "./interfaces/IFavoriteStore.js";
+import { IMovieService } from "./interfaces/IMovieService";
+import { IFavoriteStore } from "./interfaces/IFavoriteStore";
 
 // Services
-import { OmdbService } from "./services/OmdbService.js";
-import { FavoriteService } from "./services/FavoriteService.js";
+import { OmdbService } from "./services/OmdbService";
+import { FavoriteService } from "./services/FavoriteService";
 
 // Store
-import { FavoritesFileStore } from "./utils/FavoritesFileStore.js";
+import { FavoritesFileStore } from "./utils/FavoritesFileStore";
 
 // Controllers
-import { MovieController } from "./controllers/MovieController.js";
-import { FavoriteController } from "./controllers/FavoriteController.js";
+import { MovieController } from "./controllers/MovieController";
+import { FavoriteController } from "./controllers/FavoriteController";
 
 const container = new Container();
 

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { TYPES } from '../types/di.types.js';
-import { container } from '../container.js';
-import { MovieController } from '../controllers/MovieController.js';
+import { TYPES } from '../types/di.types';
+import { container } from '../container';
+import { MovieController } from '../controllers/MovieController';
 
 const router = Router();
 

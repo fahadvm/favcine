@@ -1,8 +1,8 @@
 import { injectable, inject } from 'inversify';
-import { TYPES } from '../types/di.types.js';
+import { TYPES } from '../types/di.types';
 import { Request, Response, NextFunction } from 'express';
-import { IMovieService } from '../interfaces/IMovieService.js';
-import ApiError from '../utils/ApiError.js';
+import { IMovieService } from '../interfaces/IMovieService';
+import ApiError from '../utils/ApiError';
 
 @injectable()
 export class MovieController {

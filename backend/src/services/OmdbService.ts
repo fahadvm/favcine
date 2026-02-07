@@ -1,9 +1,9 @@
 import { injectable } from 'inversify';
 import axios from 'axios';
-import config from '../config/index.js';
-import ApiError from '../utils/ApiError.js';
-import { IMovieService } from '../interfaces/IMovieService.js';
-import { SearchResponse, Movie } from '../types/index.js';
+import config from '../config/index';
+import ApiError from '../utils/ApiError';
+import { IMovieService } from '../interfaces/IMovieService';
+import { SearchResponse, Movie } from '../types/index';
 
 @injectable()
 export class OmdbService implements IMovieService {

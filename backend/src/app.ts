@@ -2,16 +2,16 @@ import "reflect-metadata";
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import movieRoutes from './routes/movie.js';
-import favoriteRoutes from './routes/favorite.js';
-import errorHandler from './middleware/ErrorMiddleware.js';
+import movieRoutes from './routes/movie';
+import favoriteRoutes from './routes/favorite';
+import errorHandler from './middleware/ErrorMiddleware';
 
 const app: Application = express();
 
 // Middleware
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: ['https://favcine.vercel.app', 'http://localhost:5173', 'http://127.0.0.1:5173'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true
 }));
 app.use(express.json());

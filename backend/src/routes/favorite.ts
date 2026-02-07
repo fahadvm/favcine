@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { TYPES } from '../types/di.types.js';
-import { container } from '../container.js';
-import { FavoriteController } from '../controllers/FavoriteController.js';
+import { TYPES } from '../types/di.types';
+import { container } from '../container';
+import { FavoriteController } from '../controllers/FavoriteController';
 
 const router = Router();
 

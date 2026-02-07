@@ -1,8 +1,8 @@
 import { injectable, inject } from 'inversify';
-import { TYPES } from '../types/di.types.js';
-import { IFavoriteStore } from '../interfaces/IFavoriteStore.js';
-import ApiError from '../utils/ApiError.js';
-import { Movie, Favorite } from '../types/index.js';
+import { TYPES } from '../types/di.types';
+import { IFavoriteStore } from '../interfaces/IFavoriteStore';
+import ApiError from '../utils/ApiError';
+import { Movie, Favorite } from '../types/index';
 
 @injectable()
 export class FavoriteService {

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import ApiError from '../utils/ApiError.js';
+import ApiError from '../utils/ApiError';
 
 const errorHandler = (err: any, req: Request, res: Response, next: NextFunction): void => {
     const statusCode = err instanceof ApiError ? err.statusCode : (err.statusCode || 500);
