@@ -1,15 +1,17 @@
 import { useFavorites } from '../hooks/useFavorites';
 import MovieList from '../components/MovieList';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorMessage from '../components/ErrorMessage';
 
 const Favorites = () => {
-    const { favorites, loading, toggleFavorite, isFavorite } = useFavorites();
+    const { favorites, loading, error, toggleFavorite, isFavorite, refresh } = useFavorites();
+
+    if (error) {
+        return <ErrorMessage message={error} onRetry={refresh} />;
+    }
 
     if (loading) {
-        return (
-            <div className="status-container">
-                <p>Loading favorites...</p>
-            </div>
-        );
+        return <LoadingSpinner message="Loading your favorites..." />;
     }
 
     return (

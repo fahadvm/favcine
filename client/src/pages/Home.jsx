@@ -6,10 +6,14 @@ import SearchBar from '../components/SearchBar';
 import useDebounce from '../hooks/useDebounce';
 import Pagination from '../components/Pagination'; // Assuming Pagination component is imported
 
+import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorMessage from '../components/ErrorMessage';
+
 const Home = () => {
     const [query, setQuery] = useState('');
     const [movies, setMovies] = useState([]);
     const [searchLoading, setSearchLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
     const [totalResults, setTotalResults] = useState(0);
 
@@ -24,6 +28,7 @@ const Home = () => {
             return;
         }
         setSearchLoading(true);
+        setError(null);
         try {
             const data = await movieService.searchMovies(searchTerm, pageNumber);
             if (data.movies) {
@@ -34,7 +39,8 @@ const Home = () => {
                 setTotalResults(0);
             }
         } catch (err) {
-            console.error('Search error', err);
+            setError(err.message || 'Failed to fetch movies. Please try again.');
+            setMovies([]);
         } finally {
             setSearchLoading(false);
         }
@@ -59,10 +65,10 @@ const Home = () => {
         <div className="home-page">
             <SearchBar onSearch={handleSearch} />
 
-            {searchLoading ? (
-                <div className="status-container">
-                    <p>Searching for movies...</p>
-                </div>
+            {error ? (
+                <ErrorMessage message={error} onRetry={() => performSearch(debouncedQuery, page)} />
+            ) : searchLoading ? (
+                <LoadingSpinner message={query ? `Searching for "${query}"...` : "Loading movies..."} />
             ) : (
                 <>
                     <MovieList
