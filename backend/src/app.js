@@ -17,8 +17,8 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Routes
-app.use('/api/movies', movieRoutes);
-app.use('/api/favorites', favoriteRoutes);
+app.use('/api/movies', movieRoutes);           // Provides /api/movies/search
+app.use('/api/movies/favorites', favoriteRoutes); // Provides /api/movies/favorites
 
 // Health check
 app.get('/health', (req, res) => res.json({ status: 'OK' }));

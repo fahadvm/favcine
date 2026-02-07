@@ -3,8 +3,13 @@ import { getFavorites, addFavorite, removeFavorite } from '../controllers/favori
 
 const router = express.Router();
 
+// Matches GET /api/movies/favorites
 router.get('/', getFavorites);
+
+// Matches POST /api/movies/favorites
 router.post('/', addFavorite);
-router.delete('/:id', removeFavorite);
+
+// Matches DELETE /api/movies/favorites/:imdbID
+router.delete('/:imdbID', removeFavorite);
 
 export default router;

@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { movieService } from '../services/api.service';
 
+/**
+ * Hook to manage favorite movies state using the backend API
+ */
 export const useFavorites = () => {
     const [favorites, setFavorites] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -25,15 +28,16 @@ export const useFavorites = () => {
     const toggleFavorite = async (movie) => {
         const isFav = favorites.find(fav => fav.imdbID === movie.imdbID);
         try {
+            let response;
             if (isFav) {
-                await movieService.removeFavorite(movie.imdbID);
-                setFavorites(favorites.filter(fav => fav.imdbID !== movie.imdbID));
+                response = await movieService.removeFavorite(movie.imdbID);
             } else {
-                await movieService.addFavorite(movie);
-                setFavorites([...favorites, movie]);
+                response = await movieService.addFavorite(movie);
             }
+            // The server now returns the full updated favorites list
+            setFavorites(response.data);
         } catch (err) {
-            setError(err.message);
+            setError(err.response?.data?.error || err.message);
             throw err;
         }
     };
