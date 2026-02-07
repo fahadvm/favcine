@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "title": "C.I.D.",
+    "year": "1998–2018",
+    "imdbID": "tt0401916",
+    "poster": "https://m.media-amazon.com/images/M/MV5BYWQyNzkxMDItZmNiNS00NTRkLTk0NTYtMWEzOTg4YjYwNTE0XkEyXkFqcGc@._V1_SX300.jpg"
+  },
+  {
+    "title": "C.I.D. Moosa",
+    "year": "2003",
+    "imdbID": "tt0377575",
+    "poster": "https://m.media-amazon.com/images/M/MV5BNWFlOGJiMTAtYWNiNC00ZTU3LWFjYTAtN2M3ZTk1YTRjMGEzXkEyXkFqcGc@._V1_SX300.jpg"
+  },
+  {
+    "title": "Marvel One-Shot: Agent Carter",
+    "year": "2013",
+    "imdbID": "tt3067038",
+    "poster": "https://m.media-amazon.com/images/M/MV5BZDIwZTM4M2QtMWFhYy00N2VmLWFlMjItMzI3NjBjYTc0OTMxXkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_SX300.jpg"
+  },
+  {
+    "title": "Captain Marvel",
+    "year": "2019",
+    "imdbID": "tt4154664",
+    "poster": "https://m.media-amazon.com/images/M/MV5BZDI1NGU2ODAtNzBiNy00MWY5LWIyMGEtZjUxZjUwZmZiNjBlXkEyXkFqcGc@._V1_SX300.jpg"
+  }
+]
