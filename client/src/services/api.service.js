@@ -1,45 +1,33 @@
 import axios from 'axios';
 
+/**
+ * Centralized Axios instance
+ * Configured with base URL and common headers.
+ * Interceptors handle global behaviors like error logging.
+ */
 const api = axios.create({
-    // Using the proxy defined in vite.config.js
-    baseURL: '/api',
+    baseURL: '/api', // Proxied via Vite to http://localhost:5000
     headers: {
         'Content-Type': 'application/json',
     },
+    timeout: 10000, // 10s timeout
 });
 
-// Add a response interceptor for global error handling
+// Response Interceptor: Centralized Error Handling
 api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        // Return only the data to simplify component logic
+        return response.data;
+    },
     (error) => {
-        const message = error.response?.data?.message || 'Something went wrong';
-        console.error(`[API Error] ${message}`);
-        return Promise.reject(error);
+        // Extract meaningful error messages from backend ApiError responses
+        const errorMessage = error.response?.data?.message || 'A network error occurred';
+
+        // You could trigger global UI notifications (toasts) here
+        console.error(`[API Error Interceptor]: ${errorMessage}`);
+
+        return Promise.reject(new Error(errorMessage));
     }
 );
-
-export const movieService = {
-    /**
-     * Search movies with pagination
-     */
-    search: (query, page = 1) => api.get(`/movies/search`, {
-        params: { query, page }
-    }),
-
-    /**
-     * Get all favorites
-     */
-    getFavorites: () => api.get('/movies/favorites'),
-
-    /**
-     * Add a movie to favorites
-     */
-    addFavorite: (movie) => api.post('/movies/favorites', movie),
-
-    /**
-     * Remove a movie from favorites
-     */
-    removeFavorite: (imdbID) => api.delete(`/movies/favorites/${imdbID}`),
-};
 
 export default api;
