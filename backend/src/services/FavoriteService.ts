@@ -10,11 +10,11 @@ import { MESSAGES } from '../constants/messages';
 export class FavoriteService {
     // SOLID: Dependency Inversion - depending on interface not implementation
     constructor(
-        @inject(TYPES.IFavoriteStore) private readonly favoriteStore: IFavoriteStore
+        @inject(TYPES.IFavoriteStore) private readonly _favoriteStore: IFavoriteStore
     ) { }
 
     async getAllFavorites(): Promise<Favorite[]> {
-        return await this.favoriteStore.getAll();
+        return await this._favoriteStore.getAll();
     }
 
     async addFavorite(movie: Movie): Promise<void> {
@@ -23,7 +23,7 @@ export class FavoriteService {
         }
 
         try {
-            await this.favoriteStore.add(movie);
+            await this._favoriteStore.add(movie);
         } catch (error) {
             if (error instanceof Error && error.message.includes('already in favorites')) {
                 throw new ApiError(HTTP_STATUS.BAD_REQUEST, error.message);
@@ -34,7 +34,7 @@ export class FavoriteService {
 
     async removeFavorite(id: string): Promise<void> {
         try {
-            await this.favoriteStore.remove(id);
+            await this._favoriteStore.remove(id);
         } catch (error) {
             if (error instanceof Error && error.message.includes('not found')) {
                 throw new ApiError(HTTP_STATUS.NOT_FOUND, error.message);

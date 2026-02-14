@@ -9,7 +9,7 @@ import { MESSAGES } from '../constants/messages';
 @injectable()
 export class MovieController {
     constructor(
-        @inject(TYPES.IMovieService) private readonly movieService: IMovieService
+        @inject(TYPES.IMovieService) private readonly _movieService: IMovieService
     ) { }
 
     /**
@@ -26,7 +26,7 @@ export class MovieController {
             }
 
             const pageNumber = parseInt(page) || 1;
-            const results = await this.movieService.searchMovies(query, pageNumber);
+            const results = await this._movieService.searchMovies(query, pageNumber);
 
             res.json(results);
         } catch (error) {
