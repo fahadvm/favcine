@@ -27,7 +27,11 @@ export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({ children }
         setError(null);
         try {
             const data = await favoritesService.getFavorites();
-            setFavorites(data);
+            if ('favorites' in data) {
+                setFavorites(data.favorites);
+            } else {
+                setFavorites(data);
+            }
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to fetch favorites');
         } finally {

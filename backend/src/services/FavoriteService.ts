@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 import { TYPES } from '../types/di.types';
 import { IFavoriteStore } from '../interfaces/IFavoriteStore';
 import ApiError from '../utils/ApiError';
-import { Movie, Favorite } from '../types/index';
+import { Movie, Favorite, PaginatedFavorites } from '../types/index';
 import { HTTP_STATUS } from '../constants/httpStatus';
 import { MESSAGES } from '../constants/messages';
 
@@ -15,6 +15,20 @@ export class FavoriteService {
 
     async getAllFavorites(): Promise<Favorite[]> {
         return await this._favoriteStore.getAll();
+    }
+
+    async getPaginatedFavorites(page: number, limit: number): Promise<PaginatedFavorites> {
+        const { favorites, total } = await this._favoriteStore.getPaginated(page, limit);
+
+        const totalPages = Math.ceil(total / limit);
+
+        return {
+            favorites,
+            total,
+            page,
+            limit,
+            totalPages
+        };
     }
 
     async addFavorite(movie: Movie): Promise<void> {

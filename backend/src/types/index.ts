@@ -13,3 +13,5 @@ export interface SearchResponse {
 export interface Favorite extends Movie {
     addedAt: string;
 }
+
+export * from './PaginatedFavorites';

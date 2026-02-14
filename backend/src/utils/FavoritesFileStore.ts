@@ -50,6 +50,26 @@ export class FavoritesFileStore implements IFavoriteStore {
     }
 
     /**
+     * Retrieve paginated favorites
+     */
+    async getPaginated(page: number, limit: number): Promise<{ favorites: Favorite[]; total: number }> {
+        const allFavorites = await this.getAll();
+        const total = allFavorites.length;
+
+        // Ensure valid page and limit
+        const pageNum = Math.max(1, page);
+        const limitNum = Math.max(1, limit);
+
+        const startIndex = (pageNum - 1) * limitNum;
+        const endIndex = startIndex + limitNum;
+
+        // Slice for pagination
+        const paginatedFavorites = allFavorites.slice(startIndex, endIndex);
+
+        return { favorites: paginatedFavorites, total };
+    }
+
+    /**
      * Add a movie to favorites
      */
     async add(movie: Movie): Promise<void> {
