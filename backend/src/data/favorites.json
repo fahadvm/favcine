@@ -1,9 +1,8 @@
 [
   {
-    "title": "C.I.D.",
+    "title": "C.I.D.fahad",
     "year": "1998–2018",
-    "imdbID": "tt0401916",
-    "poster": "https://m.media-amazon.com/images/M/MV5BYWQyNzkxMDItZmNiNS00NTRkLTk0NTYtMWEzOTg4YjYwNTE0XkEyXkFqcGc@._V1_SX300.jpg"
+    "imdbID": "tt0401916"
   },
   {
     "title": "Marvel One-Shot: Agent Carter",
@@ -24,5 +23,12 @@
     "imdbID": "tt2011118",
     "poster": "https://m.media-amazon.com/images/M/MV5BNGE4YjU5MDAtYzYzMC00M2RlLTk0NDgtNDU1MjgyMGI0MjI3XkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_SX300.jpg",
     "addedAt": "2026-02-08T08:24:20.888Z"
+  },
+  {
+    "title": "Captain Marvel",
+    "year": "2019",
+    "imdbID": "tt4154664",
+    "poster": "https://m.media-amazon.com/images/M/MV5BZDI1NGU2ODAtNzBiNy00MWY5LWIyMGEtZjUxZjUwZmZiNjBlXkEyXkFqcGc@._V1_SX300.jpg",
+    "addedAt": "2026-02-14T05:05:48.193Z"
   }
 ]
