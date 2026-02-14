@@ -81,39 +81,41 @@ const Home: React.FC = () => {
         <div className="home-page">
             {!isSearching && <Hero onStartExploring={scrollToSearch} />}
 
-            <SearchBar onSearch={handleSearch} />
+            <div className="content">
+                <SearchBar onSearch={handleSearch} />
 
-            <div className="section-header">
-                <h2 className="page-title">
-                    {isSearching ? `Search results for "${query}"` : "Trending Now"}
-                </h2>
-            </div>
-
-            {error ? (
-                <ErrorMessage
-                    message={error}
-                    onRetry={() => performSearch(isSearching ? query : 'Marvel', page)}
-                />
-            ) : searchLoading ? (
-                <MovieSkeleton />
-            ) : (
-                <div className="fade-in">
-                    <MovieList
-                        movies={movies}
-                        isFavorite={isFavorite}
-                        onToggleFavorite={toggleFavorite}
-                        emptyMessage={isSearching ? `No movies found for "${query}"` : "Unable to load trending movies."}
-                    />
-
-                    {movies.length > 0 && (
-                        <Pagination
-                            currentPage={page}
-                            totalResults={totalResults}
-                            onPageChange={handlePageChange}
-                        />
-                    )}
+                <div className="section-header">
+                    <h2 className="page-title">
+                        {isSearching ? `Search results for "${query}"` : "Trending Now"}
+                    </h2>
                 </div>
-            )}
+
+                {error ? (
+                    <ErrorMessage
+                        message={error}
+                        onRetry={() => performSearch(isSearching ? query : 'Marvel', page)}
+                    />
+                ) : searchLoading ? (
+                    <MovieSkeleton />
+                ) : (
+                    <div className="fade-in">
+                        <MovieList
+                            movies={movies}
+                            isFavorite={isFavorite}
+                            onToggleFavorite={toggleFavorite}
+                            emptyMessage={isSearching ? `No movies found for "${query}"` : "Unable to load trending movies."}
+                        />
+
+                        {movies.length > 0 && (
+                            <Pagination
+                                currentPage={page}
+                                totalResults={totalResults}
+                                onPageChange={handlePageChange}
+                            />
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

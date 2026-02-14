@@ -16,7 +16,7 @@ const Favorites: React.FC = () => {
     }
 
     return (
-        <div className="favorites-page">
+        <div className="favorites-page content">
             <h1 className="page-title">My Favorites</h1>
 
             <MovieList

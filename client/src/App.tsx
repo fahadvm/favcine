@@ -11,7 +11,7 @@ const App: React.FC = () => {
         <Router>
             <div className="app-container">
                 <Navbar />
-                <main className="content">
+                <main className="main-content">
                     <Routes>
                         <Route path={ROUTES.HOME} element={<Home />} />
                         <Route path={ROUTES.FAVORITES} element={<Favorites />} />
