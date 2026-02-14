@@ -1,5 +1,6 @@
 import api from './api.service.js';
 import { SearchResponse, Movie } from '../types/index.js';
+import { API_ENDPOINTS } from '../constants/apiEndpoints.js';
 
 interface IMovieService {
     searchMovies(query: string, page?: number): Promise<SearchResponse>;
@@ -14,7 +15,7 @@ const movieService: IMovieService = {
      * Search movies from OMDB
      */
     searchMovies: (query: string, page: number = 1): Promise<SearchResponse> => {
-        return api.get('/movies/search', {
+        return api.get(API_ENDPOINTS.MOVIES.SEARCH, {
             params: { query, page }
         }) as unknown as Promise<SearchResponse>;
     },
@@ -23,7 +24,7 @@ const movieService: IMovieService = {
      * Get details for a specific movie
      */
     getMovieDetails: (imdbID: string): Promise<Movie> => {
-        return api.get(`/movies/${imdbID}`) as unknown as Promise<Movie>;
+        return api.get(API_ENDPOINTS.MOVIES.DETAILS(imdbID)) as unknown as Promise<Movie>;
     }
 };
 

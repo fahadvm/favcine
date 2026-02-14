@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar.js';
 import Home from './pages/Home.js';
 import Favorites from './pages/Favorites.js';
+import { ROUTES } from './constants/routes.js';
 import './index.css';
 
 const App: React.FC = () => {
@@ -12,8 +13,8 @@ const App: React.FC = () => {
                 <Navbar />
                 <main className="content">
                     <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/favorites" element={<Favorites />} />
+                        <Route path={ROUTES.HOME} element={<Home />} />
+                        <Route path={ROUTES.FAVORITES} element={<Favorites />} />
                     </Routes>
                 </main>
             </div>

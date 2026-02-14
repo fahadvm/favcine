@@ -88,7 +88,7 @@ export class FavoritesFileStore implements IFavoriteStore {
      * Check if a movie is in favorites
      */
     async contains(imdbID: string): Promise<boolean> {
-        const favorites = await this.getAll();
+        const favorites = await this.getAll(); 
         return favorites.some(fav => fav.imdbID === imdbID);
     }
 }

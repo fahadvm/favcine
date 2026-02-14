@@ -7,7 +7,7 @@ import ApiError from '../utils/ApiError';
 @injectable()
 export class FavoriteController {
     constructor(
-        @inject(TYPES.FavoriteService) private readonly favoriteService: FavoriteService
+        @inject(TYPES.FavoriteService) private readonly _favoriteService: FavoriteService
     ) { }
 
     /**
@@ -15,7 +15,7 @@ export class FavoriteController {
      */
     public getFavorites = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
-            const favorites = await this.favoriteService.getAllFavorites();
+            const favorites = await this._favoriteService.getAllFavorites();
             res.json(favorites);
         } catch (error) {
             next(error);
@@ -33,9 +33,9 @@ export class FavoriteController {
                 throw new ApiError(400, 'Movie data with imdbID is required');
             }
 
-            await this.favoriteService.addFavorite(movie);
+            await this._favoriteService.addFavorite(movie);
 
-            const updatedFavorites = await this.favoriteService.getAllFavorites();
+            const updatedFavorites = await this._favoriteService.getAllFavorites();
             res.status(201).json(updatedFavorites);
         } catch (error) {
             next(error);
@@ -53,9 +53,9 @@ export class FavoriteController {
                 throw new ApiError(400, 'imdbID is required');
             }
 
-            await this.favoriteService.removeFavorite(imdbID);
+            await this._favoriteService.removeFavorite(imdbID);
 
-            const updatedFavorites = await this.favoriteService.getAllFavorites();
+            const updatedFavorites = await this._favoriteService.getAllFavorites();
             res.json(updatedFavorites);
         } catch (error) {
             next(error);
