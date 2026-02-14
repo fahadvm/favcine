@@ -4,6 +4,8 @@ import config from '../config/index';
 import ApiError from '../utils/ApiError';
 import { IMovieService } from '../interfaces/IMovieService';
 import { SearchResponse, Movie } from '../types/index';
+import { HTTP_STATUS } from '../constants/httpStatus';
+import { MESSAGES } from '../constants/messages';
 
 @injectable()
 export class OmdbService implements IMovieService {
@@ -29,7 +31,7 @@ export class OmdbService implements IMovieService {
                 if (data.Error === 'Movie not found!') {
                     return { movies: [], totalResults: 0 };
                 }
-                throw new ApiError(400, `OMDB Error: ${data.Error}`);
+                throw new ApiError(HTTP_STATUS.BAD_REQUEST, `OMDB Error: ${data.Error}`);
             }
 
             const movies: Movie[] = (data.Search || []).map((movie: any) => ({
@@ -48,8 +50,8 @@ export class OmdbService implements IMovieService {
         } catch (error) {
             if (error instanceof ApiError) throw error;
 
-            const statusCode = (error as any).response?.status || 500;
-            const message = (error as any).response?.data?.Error || 'Failed to fetch data from OMDB API';
+            const statusCode = (error as any).response?.status || HTTP_STATUS.INTERNAL_SERVER_ERROR;
+            const message = (error as any).response?.data?.Error || MESSAGES.OMDB_FETCH_ERROR;
 
             console.error('[OmdbService Error]', (error as any).response?.data || (error as Error).message);
             throw new ApiError(statusCode, message);

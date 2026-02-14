@@ -3,6 +3,8 @@ import { TYPES } from '../types/di.types';
 import { Request, Response, NextFunction } from 'express';
 import { IMovieService } from '../interfaces/IMovieService';
 import ApiError from '../utils/ApiError';
+import { HTTP_STATUS } from '../constants/httpStatus';
+import { MESSAGES } from '../constants/messages';
 
 @injectable()
 export class MovieController {
@@ -20,7 +22,7 @@ export class MovieController {
             const page = req.query.page as string;
 
             if (!query || query.trim().length === 0) {
-                throw new ApiError(400, 'Search query is required');
+                throw new ApiError(HTTP_STATUS.BAD_REQUEST, MESSAGES.SEARCH_QUERY_REQUIRED);
             }
 
             const pageNumber = parseInt(page) || 1;

@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import movieRoutes from './routes/movie';
 import favoriteRoutes from './routes/favorite';
 import errorHandler from './middleware/ErrorMiddleware';
+import { MESSAGES } from './constants/messages';
 
 const app: Application = express();
 
@@ -23,7 +24,7 @@ app.use('/api/movies/favorites', favoriteRoutes);
 
 // Health check
 app.get('/health', (req: Request, res: Response) => {
-    res.json({ status: 'OK' });
+    res.json({ status: MESSAGES.HEALTH_OK });
 });
 
 // Error Handling

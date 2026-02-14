@@ -4,6 +4,7 @@ import path from 'path';
 import config from '../config/index';
 import { IFavoriteStore } from '../interfaces/IFavoriteStore';
 import { Favorite, Movie } from '../types/index';
+import { MESSAGES } from '../constants/messages';
 
 /**
  * File-based storage for favorites using JSON
@@ -56,7 +57,7 @@ export class FavoritesFileStore implements IFavoriteStore {
 
         // Check for duplicates
         if (favorites.some(fav => fav.imdbID === movie.imdbID)) {
-            throw new Error('Movie is already in favorites');
+            throw new Error(MESSAGES.MOVIE_ALREADY_IN_FAVORITES);
         }
 
         const newFavorite: Favorite = {
@@ -78,7 +79,7 @@ export class FavoritesFileStore implements IFavoriteStore {
         favorites = favorites.filter(fav => fav.imdbID !== imdbID);
 
         if (favorites.length === initialLength) {
-            throw new Error('Movie not found in favorites');
+            throw new Error(MESSAGES.MOVIE_NOT_FOUND_IN_FAVORITES);
         }
 
         await fs.writeJson(this.filePath, favorites, { spaces: 2 });
@@ -88,7 +89,7 @@ export class FavoritesFileStore implements IFavoriteStore {
      * Check if a movie is in favorites
      */
     async contains(imdbID: string): Promise<boolean> {
-        const favorites = await this.getAll(); 
+        const favorites = await this.getAll();
         return favorites.some(fav => fav.imdbID === imdbID);
     }
 }

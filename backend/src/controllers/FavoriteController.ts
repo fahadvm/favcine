@@ -3,6 +3,8 @@ import { TYPES } from '../types/di.types';
 import { Request, Response, NextFunction } from 'express';
 import { FavoriteService } from '../services/FavoriteService';
 import ApiError from '../utils/ApiError';
+import { HTTP_STATUS } from '../constants/httpStatus';
+import { MESSAGES } from '../constants/messages';
 
 @injectable()
 export class FavoriteController {
@@ -30,13 +32,13 @@ export class FavoriteController {
             const movie = req.body;
 
             if (!movie || !movie.imdbID) {
-                throw new ApiError(400, 'Movie data with imdbID is required');
+                throw new ApiError(HTTP_STATUS.BAD_REQUEST, MESSAGES.MOVIE_DATA_REQUIRED);
             }
 
             await this._favoriteService.addFavorite(movie);
 
             const updatedFavorites = await this._favoriteService.getAllFavorites();
-            res.status(201).json(updatedFavorites);
+            res.status(HTTP_STATUS.CREATED).json(updatedFavorites);
         } catch (error) {
             next(error);
         }
@@ -50,7 +52,7 @@ export class FavoriteController {
             const imdbID = req.params.imdbID as string;
 
             if (!imdbID) {
-                throw new ApiError(400, 'imdbID is required');
+                throw new ApiError(HTTP_STATUS.BAD_REQUEST, MESSAGES.IMDB_ID_REQUIRED);
             }
 
             await this._favoriteService.removeFavorite(imdbID);
