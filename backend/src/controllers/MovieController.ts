@@ -12,10 +12,7 @@ export class MovieController {
         @inject(TYPES.IMovieService) private readonly _movieService: IMovieService
     ) { }
 
-    /**
-     * Controller for movie search
-     * GET /api/movies/search?query=batman&page=1
-     */
+    
     public searchMovies = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const query = req.query.query as string;

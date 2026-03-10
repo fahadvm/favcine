@@ -1,6 +1,4 @@
-/**
- * Custom Error class for API specific errors
- */
+
 class ApiError extends Error {
     public readonly statusCode: number;
     public readonly status: string;

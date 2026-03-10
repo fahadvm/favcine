@@ -8,7 +8,7 @@ import { MESSAGES } from '../constants/messages';
 
 @injectable()
 export class FavoriteService {
-    // SOLID: Dependency Inversion - depending on interface not implementation
+    
     constructor(
         @inject(TYPES.IFavoriteStore) private readonly _favoriteStore: IFavoriteStore
     ) { }

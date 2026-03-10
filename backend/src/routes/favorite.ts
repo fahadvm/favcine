@@ -5,7 +5,7 @@ import { FavoriteController } from '../controllers/FavoriteController';
 
 const router = Router();
 
-// Resolve Controller from Container
+
 const favoriteController = container.get<FavoriteController>(TYPES.FavoriteController);
 
 router.get('/', favoriteController.getFavorites);

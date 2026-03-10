@@ -6,10 +6,7 @@ import { IFavoriteStore } from '../interfaces/IFavoriteStore';
 import { Favorite, Movie } from '../types/index';
 import { MESSAGES } from '../constants/messages';
 
-/**
- * File-based storage for favorites using JSON
- * Implements IFavoriteStore (SOLID: Interface Segregation & Dependency Inversion)
- */
+
 @injectable()
 export class FavoritesFileStore implements IFavoriteStore {
     private readonly filePath: string;
@@ -22,9 +19,7 @@ export class FavoritesFileStore implements IFavoriteStore {
         this.init();
     }
 
-    /**
-     * Ensure the data directory and file exist
-     */
+    
     private async init(): Promise<void> {
         try {
             await fs.ensureFile(this.filePath);
@@ -37,9 +32,7 @@ export class FavoritesFileStore implements IFavoriteStore {
         }
     }
 
-    /**
-     * Retrieve all favorites
-     */
+    
     async getAll(): Promise<Favorite[]> {
         try {
             const data = await fs.readJson(this.filePath);
@@ -49,33 +42,29 @@ export class FavoritesFileStore implements IFavoriteStore {
         }
     }
 
-    /**
-     * Retrieve paginated favorites
-     */
+    
     async getPaginated(page: number, limit: number): Promise<{ favorites: Favorite[]; total: number }> {
         const allFavorites = await this.getAll();
         const total = allFavorites.length;
 
-        // Ensure valid page and limit
+        
         const pageNum = Math.max(1, page);
         const limitNum = Math.max(1, limit);
 
         const startIndex = (pageNum - 1) * limitNum;
         const endIndex = startIndex + limitNum;
 
-        // Slice for pagination
+        
         const paginatedFavorites = allFavorites.slice(startIndex, endIndex);
 
         return { favorites: paginatedFavorites, total };
     }
 
-    /**
-     * Add a movie to favorites
-     */
+    
     async add(movie: Movie): Promise<void> {
         const favorites = await this.getAll();
 
-        // Check for duplicates
+        
         if (favorites.some(fav => fav.imdbID === movie.imdbID)) {
             throw new Error(MESSAGES.MOVIE_ALREADY_IN_FAVORITES);
         }
@@ -89,9 +78,7 @@ export class FavoritesFileStore implements IFavoriteStore {
         await fs.writeJson(this.filePath, favorites, { spaces: 2 });
     }
 
-    /**
-     * Remove a movie from favorites
-     */
+    
     async remove(imdbID: string): Promise<void> {
         let favorites = await this.getAll();
         const initialLength = favorites.length;
@@ -105,9 +92,7 @@ export class FavoritesFileStore implements IFavoriteStore {
         await fs.writeJson(this.filePath, favorites, { spaces: 2 });
     }
 
-    /**
-     * Check if a movie is in favorites
-     */
+    
     async contains(imdbID: string): Promise<boolean> {
         const favorites = await this.getAll();
         return favorites.some(fav => fav.imdbID === imdbID);
