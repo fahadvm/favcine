@@ -1,14 +1,15 @@
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../types/di.types';
 import { IFavoriteStore } from '../interfaces/IFavoriteStore';
+import { IFavoriteService } from '../interfaces/IFavoriteService';
 import ApiError from '../utils/ApiError';
 import { Movie, Favorite, PaginatedFavorites } from '../types/index';
 import { HTTP_STATUS } from '../constants/httpStatus';
 import { MESSAGES } from '../constants/messages';
 
 @injectable()
-export class FavoriteService {
-    
+export class FavoriteService implements IFavoriteService {
+
     constructor(
         @inject(TYPES.IFavoriteStore) private readonly _favoriteStore: IFavoriteStore
     ) { }

@@ -14,4 +14,11 @@ export interface Favorite extends Movie {
     addedAt: string;
 }
 
-export * from './PaginatedFavorites';
+export interface PaginatedFavorites {
+    favorites: Favorite[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+}
+

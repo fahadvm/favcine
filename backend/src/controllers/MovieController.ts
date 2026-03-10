@@ -2,17 +2,18 @@ import { injectable, inject } from 'inversify';
 import { TYPES } from '../types/di.types';
 import { Request, Response, NextFunction } from 'express';
 import { IMovieService } from '../interfaces/IMovieService';
+import { IMovieController } from '../interfaces/IMovieController';
 import ApiError from '../utils/ApiError';
 import { HTTP_STATUS } from '../constants/httpStatus';
 import { MESSAGES } from '../constants/messages';
 
 @injectable()
-export class MovieController {
+export class MovieController implements IMovieController {
     constructor(
         @inject(TYPES.IMovieService) private readonly _movieService: IMovieService
     ) { }
 
-    
+
     public searchMovies = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const query = req.query.query as string;
